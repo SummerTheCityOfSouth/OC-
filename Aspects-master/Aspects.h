@@ -45,6 +45,7 @@ typedef NS_OPTIONS(NSUInteger, AspectOptions) {
  */
 @interface NSObject (Aspects)
 
+///
 /// Adds a block of code before/instead/after the current `selector` for a specific class.
 ///
 /// @param block Aspects replicates the type signature of the method being hooked.
@@ -65,6 +66,14 @@ typedef NS_OPTIONS(NSUInteger, AspectOptions) {
                             usingBlock:(id)block
                                  error:(NSError **)error;
 
+/*
+- aspect_hookSelector:(SEL)selector withOptions:(AspectOptions)options usingBlock:(id)block error:(NSError **)error
+└── aspect_add(self, selector, options, block, error);
+    └── aspect_performLocked
+        ├── aspect_isSelectorAllowedAndTrack
+        └── aspect_prepareClassAndHookSelector
+ */
+///唯一不同的是一个是加号方法一个是减号方法。一个是用来hook类方法，一个是用来hook实例方法。"。 我理解Aspect是不能hook static方法的，在iOS里面即不能hook类方法， 加号方法应该是hook对类的所有对象生效，减号方法是hook支队单个对象生效，他们的调用者一个是类，一个是对象
 @end
 
 
